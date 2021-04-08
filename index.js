@@ -51,18 +51,25 @@ function createBoard() {
     grid.appendChild(square)
     // put square in squares array
     squares.push(square)
-    if (layout[i] === 0) {
-      squares[i].classList.add('pac-dot')
-    } else if (layout[i] === 1) {
-      squares[i].classList.add('wall')
-    } else if (layout[i] === 3) {
-      squares[i].classList.add('power-pellet')
+    switch (layout[i]) {
+      case 0:
+        squares[i].classList.add('pac-dot')
+        break;
+      case 1:
+        squares[i].classList.add('wall')
+        break;
+      case 3:
+        squares[i].classList.add('power-pellet')
+        break;
     }
-    
 
 
   } 
 }
 
 createBoard()
+
+// start position of pacman
+let pacmanCurrentIndex = 490
+squares[pacmanCurrentIndex].classList.add('pacman')
 
