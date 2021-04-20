@@ -73,3 +73,23 @@ createBoard()
 let pacmanCurrentIndex = 490
 squares[pacmanCurrentIndex].classList.add('pacman')
 
+function control(e) {
+  switch (e.key) {
+    case "ArrowUp" :
+      console.log("up")
+      break;
+    case "ArrowDown" :
+      console.log("down")
+      break;
+    case "ArrowLeft" :
+      console.log("left")
+      break;
+    case "ArrowRight" :
+      console.log("right")
+      break;
+    default:
+      return;
+  }
+}
+
+document.addEventListener('keyup', control)
