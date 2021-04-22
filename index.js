@@ -82,7 +82,7 @@ function control(e) {
     case "ArrowUp":
       console.log("up")
       if (
-        !sqaures[pacmanCurrentIndex - width].classList.contains('ghost-lair') &&
+        !squares[pacmanCurrentIndex - width].classList.contains('ghost-lair') &&
         !squares[pacmanCurrentIndex - width].classList.contains('wall') &&
         pacmanCurrentIndex - width >= 0
       )
@@ -91,32 +91,30 @@ function control(e) {
     case "ArrowDown":
       console.log("down")
       if (
-        !sqaures[pacmanCurrentIndex + width].classList.contains('ghost-lair') &&
+        !squares[pacmanCurrentIndex + width].classList.contains('ghost-lair') &&
         !squares[pacmanCurrentIndex + width].classList.contains('wall') &&
         pacmanCurrentIndex + width < width * width
-        ) 
+      )
         pacmanCurrentIndex += width
       break
     case "ArrowLeft":
       console.log("left")
       if (
-        !sqaures[pacmanCurrentIndex - 1].classList.contains('ghost-lair') &&
-        !squares[pacmanCurrentIndex - 1].classList.contains('wall') && 
+        !squares[pacmanCurrentIndex - 1].classList.contains('ghost-lair') &&
+        !squares[pacmanCurrentIndex - 1].classList.contains('wall') &&
         pacmanCurrentIndex % width !== 0
-        ) 
+      )
         pacmanCurrentIndex -= 1
       break
     case "ArrowRight":
       console.log("right")
       if (
-        !sqaures[pacmanCurrentIndex + 1].classList.contains('ghost-lair') &&
-        !squares[pacmanCurrentIndex + 1].classList.contains('wall') && 
+        !squares[pacmanCurrentIndex + 1].classList.contains('ghost-lair') &&
+        !squares[pacmanCurrentIndex + 1].classList.contains('wall') &&
         pacmanCurrentIndex % width < width - 1
-        ) 
+      )
         pacmanCurrentIndex += 1
       break
-    default:
-      return
   }
   squares[pacmanCurrentIndex].classList.add('pacman')
 
