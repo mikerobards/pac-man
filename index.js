@@ -74,22 +74,29 @@ let pacmanCurrentIndex = 490
 squares[pacmanCurrentIndex].classList.add('pacman')
 
 function control(e) {
+  squares[pacmanCurrentIndex].classList.remove('pacman')
   switch (e.key) {
     case "ArrowUp" :
       console.log("up")
-      break;
+      if (pacmanCurrentIndex - width >=0) pacmanCurrentIndex -= width
+      break
     case "ArrowDown" :
       console.log("down")
-      break;
+      if (pacmanCurrentIndex + width < width * width) pacmanCurrentIndex += width
+      break
     case "ArrowLeft" :
       console.log("left")
-      break;
+      if (pacmanCurrentIndex % width !== 0) pacmanCurrentIndex -=1
+      break
     case "ArrowRight" :
       console.log("right")
-      break;
+      if (pacmanCurrentIndex % width < width -1) pacmanCurrentIndex +=1
+      break
     default:
-      return;
+      return
   }
+  squares[pacmanCurrentIndex].classList.add('pacman')
+
 }
 
 document.addEventListener('keyup', control)
