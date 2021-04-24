@@ -82,7 +82,6 @@ function control(e) {
   squares[pacmanCurrentIndex].classList.remove('pacman')
   switch (e.key) {
     case "ArrowUp":
-      console.log("up")
       if (
         !squares[pacmanCurrentIndex - width].classList.contains('ghost-lair') &&
         !squares[pacmanCurrentIndex - width].classList.contains('wall') &&
@@ -91,7 +90,6 @@ function control(e) {
         pacmanCurrentIndex -= width
       break
     case "ArrowDown":
-      console.log("down")
       if (
         !squares[pacmanCurrentIndex + width].classList.contains('ghost-lair') &&
         !squares[pacmanCurrentIndex + width].classList.contains('wall') &&
@@ -100,7 +98,6 @@ function control(e) {
         pacmanCurrentIndex += width
       break
     case "ArrowLeft":
-      console.log("left")
       if (
         !squares[pacmanCurrentIndex - 1].classList.contains('ghost-lair') &&
         !squares[pacmanCurrentIndex - 1].classList.contains('wall') &&
@@ -112,7 +109,6 @@ function control(e) {
       }
       break
     case "ArrowRight":
-      console.log("right")
       if (
         !squares[pacmanCurrentIndex + 1].classList.contains('ghost-lair') &&
         !squares[pacmanCurrentIndex + 1].classList.contains('wall') &&
@@ -135,7 +131,6 @@ document.addEventListener('keydown', control)
 function pacDotEaten() {
   if (squares[pacmanCurrentIndex].classList.contains('pac-dot')) {
     score++
-    console.log(score)
     scoreDisplay.innerHTML = score
     squares[pacmanCurrentIndex].classList.remove('pac-dot')
   }
@@ -188,10 +183,8 @@ ghosts.forEach(ghost => {
 ghosts.forEach(ghost => moveGhost(ghost))
 
 function moveGhost(ghost) {
-  console.log('moved ghost')
   const directions = [-1, +1, -width, +width]
   let direction = directions[Math.floor(Math.random() * directions.length)]
-  console.log(direction)
 
   ghost.timerId = setInterval(function () {
     //if next sqaure !contain wall && !contain ghost
@@ -219,7 +212,7 @@ function moveGhost(ghost) {
     if (
       squares[pacmanCurrentIndex].classList.contains('ghost') &&
       squares[pacmanCurrentIndex].classList.contains('scared-ghost')
-      ) {
+    ) {
       //remove classnames - ghost.className, 'ghost', 'scared-ghost'
       squares[ghost.currentIndex].classList.remove(ghost.className, 'ghost', 'scared-ghost')
       //change ghosts current index to start index
@@ -229,7 +222,6 @@ function moveGhost(ghost) {
       scoreDisplay.innerHTML = score
       //readd classnames of ghost.classname and 'ghost' to the ghosts new position
       squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
-      console.log('YES')
     }
   }, ghost.speed)
 
