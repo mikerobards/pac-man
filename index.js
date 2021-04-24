@@ -76,6 +76,7 @@ createBoard()
 // start position of pacman
 let pacmanCurrentIndex = 490
 squares[pacmanCurrentIndex].classList.add('pacman')
+scoreDisplay.innerHTML = score
 
 function control(e) {
   squares[pacmanCurrentIndex].classList.remove('pacman')
@@ -142,13 +143,14 @@ function powerPelletEaten() {
   //if square pacman is in contains a power pellet
   if (squares[pacmanCurrentIndex].classList.contains('power-pellet')) {
     //add score 10
-    score += 10
+    score +=10
+    scoreDisplay.innerHTML = score
+    //remove power pellet
     squares[pacmanCurrentIndex].classList.remove('power-pellet')
-
     //change each of the four ghosts to isScared
     ghosts.forEach(ghost => ghost.isScared = true)
     //use setTimeout to unscare ghosts after 10 seconds
-    setTimeout(unScareGhosts, 10000)
+    setTimeout(unScareGhosts, 100000)
   }
 }
 
@@ -197,7 +199,7 @@ function moveGhost(ghost) {
     ) {
       //remove ghost
       squares[ghost.currentIndex].classList.remove(ghost.className)
-      squares[ghost.currentIndex].classList.remove('ghost')
+      squares[ghost.currentIndex].classList.remove('ghost', 'scared-ghost')
 
     //add direction to current index
     ghost.currentIndex += direction
@@ -205,6 +207,25 @@ function moveGhost(ghost) {
     squares[ghost.currentIndex].classList.add(ghost.className)
     squares[ghost.currentIndex].classList.add('ghost')
     } else direction = directions[Math.floor(Math.random() * directions.length)]
+
+    //if ghost isScared
+    if (ghost.isScared) {
+      squares[ghost.currentIndex].classList.add('scared-ghost')
+    }
+
+    //if ghost isScared && pacman is on it
+    if (ghost.isScared && pacmanCurrentIndex === ghost.currentIndex) {
+    //remove classnames - ghost.className, 'ghost', 'scared-ghost'
+    squares[ghost.currentIndex].classList.remove(ghost.className, 'ghost', 'scared-ghost')
+    //change ghosts current index to start index
+    ghost.currentIndex = ghost.startIndex
+    //add score of 100 points
+    score +=100
+    scoreDisplay.innerHTML = score
+    //readd classnames of ghost.classname and 'ghost' to the ghosts new position
+    squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
+    console.log('YES')
+    }
 
 }, ghost.speed) 
 
