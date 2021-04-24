@@ -143,7 +143,7 @@ function powerPelletEaten() {
   //if square pacman is in contains a power pellet
   if (squares[pacmanCurrentIndex].classList.contains('power-pellet')) {
     //add score 10
-    score +=10
+    score += 10
     scoreDisplay.innerHTML = score
     //remove power pellet
     squares[pacmanCurrentIndex].classList.remove('power-pellet')
@@ -201,11 +201,11 @@ function moveGhost(ghost) {
       squares[ghost.currentIndex].classList.remove(ghost.className)
       squares[ghost.currentIndex].classList.remove('ghost', 'scared-ghost')
 
-    //add direction to current index
-    ghost.currentIndex += direction
-    //add ghost class
-    squares[ghost.currentIndex].classList.add(ghost.className)
-    squares[ghost.currentIndex].classList.add('ghost')
+      //add direction to current index
+      ghost.currentIndex += direction
+      //add ghost class
+      squares[ghost.currentIndex].classList.add(ghost.className)
+      squares[ghost.currentIndex].classList.add('ghost')
     } else direction = directions[Math.floor(Math.random() * directions.length)]
 
     //if ghost isScared
@@ -215,20 +215,20 @@ function moveGhost(ghost) {
 
     //if ghost isScared && pacman is on it
     if (ghost.isScared && pacmanCurrentIndex === ghost.currentIndex) {
-    //remove classnames - ghost.className, 'ghost', 'scared-ghost'
-    squares[ghost.currentIndex].classList.remove(ghost.className, 'ghost', 'scared-ghost')
-    //change ghosts current index to start index
-    ghost.currentIndex = ghost.startIndex
-    //add score of 100 points
-    score +=100
-    scoreDisplay.innerHTML = score
-    //readd classnames of ghost.classname and 'ghost' to the ghosts new position
-    squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
-    console.log('YES')
+      //remove classnames - ghost.className, 'ghost', 'scared-ghost'
+      squares[ghost.currentIndex].classList.remove(ghost.className, 'ghost', 'scared-ghost')
+      //change ghosts current index to start index
+      ghost.currentIndex = ghost.startIndex
+      //add score of 100 points
+      score += 100
+      scoreDisplay.innerHTML = score
+      //readd classnames of ghost.classname and 'ghost' to the ghosts new position
+      squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
+      console.log('YES')
     }
     checkGameOver()
-}, ghost.speed) 
-
+    checkForWin()
+  }, ghost.speed)
 
 }
 
@@ -237,23 +237,28 @@ function moveGhost(ghost) {
 function checkGameOver() {
   //if pacman contains ghost and not isScared
   if (
-    squares[pacmanCurrentIndex].classList.contains('ghost') && 
+    squares[pacmanCurrentIndex].classList.contains('ghost') &&
     !squares[pacmanCurrentIndex].classList.contains('scared-ghost')
-    ) {
+  ) {
 
-  //for each ghost- we need to stop it moving
+    //for each ghost- we need to stop it moving
     ghosts.forEach(ghost => clearInterval(ghost.timerId))
 
-  //remove eventListener from control function
+    //remove eventListener from control function
     document.removeEventListener('keyup', control)
 
-  //alert user game over
-  scoreDisplay.innerHTML = 'You Lose!'
+    //alert user game over
+    scoreDisplay.innerHTML = 'You Lose!'
   }
-
 }
 
 function checkForWin() {
-  
+  //if all dots and power pellets are eaten
+  if (score === 274) {
+    //alert user game over
+    ghosts.forEach(ghost => clearInterval(ghost.timerId))
+    document.removeEventListener('keyup', control)
+    scoreDisplay.innerHTML = score + ' You Win!'
+  }
 }
 
