@@ -127,8 +127,10 @@ function control(e) {
   squares[pacmanCurrentIndex].classList.add('pacman')
   pacDotEaten()
   powerPelletEaten()
+  checkForWin()
+  checkGameOver()
 }
-document.addEventListener('keyup', control)
+document.addEventListener('keydown', control)
 
 function pacDotEaten() {
   if (squares[pacmanCurrentIndex].classList.contains('pac-dot')) {
@@ -214,7 +216,10 @@ function moveGhost(ghost) {
     }
 
     //if ghost isScared && pacman is on it
-    if (ghost.isScared && pacmanCurrentIndex === ghost.currentIndex) {
+    if (
+      squares[pacmanCurrentIndex].classList.contains('ghost') &&
+      squares[pacmanCurrentIndex].classList.contains('scared-ghost')
+      ) {
       //remove classnames - ghost.className, 'ghost', 'scared-ghost'
       squares[ghost.currentIndex].classList.remove(ghost.className, 'ghost', 'scared-ghost')
       //change ghosts current index to start index
@@ -226,8 +231,6 @@ function moveGhost(ghost) {
       squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
       console.log('YES')
     }
-    checkGameOver()
-    checkForWin()
   }, ghost.speed)
 
 }
@@ -245,7 +248,7 @@ function checkGameOver() {
     ghosts.forEach(ghost => clearInterval(ghost.timerId))
 
     //remove eventListener from control function
-    document.removeEventListener('keyup', control)
+    document.removeEventListener('keydown', control)
 
     //alert user game over
     scoreDisplay.innerHTML = 'You Lose!'
@@ -254,10 +257,10 @@ function checkGameOver() {
 
 function checkForWin() {
   //if all dots and power pellets are eaten
-  if (score === 274) {
+  if (score >= 274) {
     //alert user game over
     ghosts.forEach(ghost => clearInterval(ghost.timerId))
-    document.removeEventListener('keyup', control)
+    document.removeEventListener('keydown', control)
     scoreDisplay.innerHTML = score + ' You Win!'
   }
 }
