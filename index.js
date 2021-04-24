@@ -150,7 +150,7 @@ function powerPelletEaten() {
     //change each of the four ghosts to isScared
     ghosts.forEach(ghost => ghost.isScared = true)
     //use setTimeout to unscare ghosts after 10 seconds
-    setTimeout(unScareGhosts, 100000)
+    setTimeout(unScareGhosts, 10000)
   }
 }
 
@@ -226,10 +226,34 @@ function moveGhost(ghost) {
     squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
     console.log('YES')
     }
-
+    checkGameOver()
 }, ghost.speed) 
 
 
 }
 
-// clearIntserval(ghost.timerId)
+// check for game over
+
+function checkGameOver() {
+  //if pacman contains ghost and not isScared
+  if (
+    squares[pacmanCurrentIndex].classList.contains('ghost') && 
+    !squares[pacmanCurrentIndex].classList.contains('scared-ghost')
+    ) {
+
+  //for each ghost- we need to stop it moving
+    ghosts.forEach(ghost => clearInterval(ghost.timerId))
+
+  //remove eventListener from control function
+    document.removeEventListener('keyup', control)
+
+  //alert user game over
+  scoreDisplay.innerHTML = 'You Lose!'
+  }
+
+}
+
+function checkForWin() {
+  
+}
+
