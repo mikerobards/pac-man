@@ -106,9 +106,9 @@ function control(e) {
         pacmanCurrentIndex % width !== 0
       )
         pacmanCurrentIndex -= 1
-        if (pacmanCurrentIndex === 364) {
-          pacmanCurrentIndex = 391
-        }
+      if (pacmanCurrentIndex === 364) {
+        pacmanCurrentIndex = 391
+      }
       break
     case "ArrowRight":
       console.log("right")
@@ -118,9 +118,9 @@ function control(e) {
         pacmanCurrentIndex % width < width - 1
       )
         pacmanCurrentIndex += 1
-        if (pacmanCurrentIndex === 391) {
-          pacmanCurrentIndex = 364
-        }
+      if (pacmanCurrentIndex === 391) {
+        pacmanCurrentIndex = 364
+      }
       break
   }
   squares[pacmanCurrentIndex].classList.add('pacman')
@@ -155,7 +155,10 @@ const ghosts = [
   new Ghost('clyde', 379, 500),
 ]
 
-ghosts.forEach(ghost => squares[ghost.startIndex].classList.add(ghost.className)) 
+ghosts.forEach(ghost => {
+  squares[ghost.currentIndex].classList.add(ghost.className)
+  squares[ghost.currentIndex].classList.add('ghost')
+})
 
 // move ghost
 ghosts.forEach(ghost => moveGhost(ghost))
@@ -163,18 +166,27 @@ ghosts.forEach(ghost => moveGhost(ghost))
 function moveGhost(ghost) {
   console.log('moved ghost')
   const directions = [-1, +1, -width, +width]
-  let direction = directions[Math.floor(Math.random()*directions.length)]
+  let direction = directions[Math.floor(Math.random() * directions.length)]
   console.log(direction)
 
-  ghost.timerId = setInterval(function() {
-    //remove ghost
-    // squares[ghost.currentIndex].classList.remove(ghost.className)
-    //add direction to current index
-    // ghost.currentIndex += direction  
-    //add ghost class
-    // squares[ghost.currentIndex].classList.add(ghost.className)
+  ghost.timerId = setInterval(function () {
+    //if next sqaure !contain wall && !contain ghost
+    if (
+      !squares[ghost.currentIndex + direction].classList.contains('ghost') &&
+      !squares[ghost.currentIndex + direction].classList.contains('wall')
+    ) {
+      //remove ghost
+      squares[ghost.currentIndex].classList.remove(ghost.className)
+      squares[ghost.currentIndex].classList.remove('ghost')
 
-  }, ghost.speed) 
+    //add direction to current index
+    ghost.currentIndex += direction
+    //add ghost class
+    squares[ghost.currentIndex].classList.add(ghost.className)
+    squares[ghost.currentIndex].classList.add('ghost')
+    } else direction = directions[Math.floor(Math.random() * directions.length)]
+
+}, ghost.speed) 
 
 
 }
